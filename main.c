@@ -17,7 +17,7 @@
 #include <ncurses.h>
 #include <stdio.h>
 
-int render(int zoom,float shift_x,float shift_y,int width,int height) {
+int render(float zoom,float shift_x,float shift_y,int width,int height) {
 	int x_scale = 25 * zoom;
 	int y_scale = 10 * zoom;
 	
@@ -52,7 +52,8 @@ int render(int zoom,float shift_x,float shift_y,int width,int height) {
 }
 
 int main() {
-	int zoom = 1;
+	float zoom = 1;
+	float zoom_factor = 1.25;
 	
 	float shift_x = -11;
 	float shift_y = 0;
@@ -75,16 +76,16 @@ int main() {
 			break;
 		}
 		else if (c == '+') {
-			zoom++;
+			zoom *= zoom_factor;
 			
-			shift_x = shift_x * zoom / (zoom - 1);
-			shift_y = shift_y * zoom / (zoom - 1);
+			shift_x *= zoom_factor;
+			shift_y *= zoom_factor;
 		}
 		else if (c == '-') {
-			zoom--;
+			zoom /= zoom_factor;
 			
-			shift_x = shift_x * (zoom - 1) / zoom;
-			shift_y = shift_y * (zoom - 1) / zoom;
+			shift_x /= zoom_factor;
+			shift_y /= zoom_factor;
 		}
 		else if (c == KEY_UP) {
 			shift_y--;
