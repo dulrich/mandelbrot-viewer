@@ -17,12 +17,11 @@
 #include <ncurses.h>
 #include <stdio.h>
 
-int render(int zoom,int shift_x,int shift_y,int width,int height) {
+int render(int zoom,float shift_x,float shift_y,int width,int height) {
 	int x_scale = 25 * zoom;
 	int y_scale = 10 * zoom;
 	
-	shift_x = (shift_x * zoom) + width * (zoom - 1);
-	shift_y = shift_y * zoom;
+	shift_x = shift_x + width * (zoom - 1);
 	
 	float i,j,r;
 	int k;
@@ -35,7 +34,6 @@ int render(int zoom,int shift_x,int shift_y,int width,int height) {
 	int c = 0;
 	while(c++,y++ < (height - 1 + shift_y)) {
 		move(c,0);
-		refresh();
 		
 		for(
 			x = 0 + shift_x;
@@ -56,8 +54,8 @@ int render(int zoom,int shift_x,int shift_y,int width,int height) {
 int main() {
 	int zoom = 1;
 	
-	int shift_x = -11;
-	int shift_y = 0;
+	float shift_x = -11;
+	float shift_y = 0;
 	
 	// if you have a larger terminal...
 	// should get curses window size
@@ -78,9 +76,15 @@ int main() {
 		}
 		else if (c == '+') {
 			zoom++;
+			
+			shift_x = shift_x * zoom / (zoom - 1);
+			shift_y = shift_y * zoom / (zoom - 1);
 		}
 		else if (c == '-') {
 			zoom--;
+			
+			shift_x = shift_x * (zoom - 1) / zoom;
+			shift_y = shift_y * (zoom - 1) / zoom;
 		}
 		else if (c == KEY_UP) {
 			shift_y--;
@@ -102,6 +106,7 @@ int main() {
 		render(zoom,shift_x,shift_y,width/2,height/2);
 		
 		refresh();
+		
 		c = getch();
 	} while(c);
 	
