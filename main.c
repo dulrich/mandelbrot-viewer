@@ -1,33 +1,34 @@
 // mandelbrot viewer: curses mandelbrot explorer
 // Copyright (C) 2015  David Ulrich
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU Affero General Public License as published
 // by the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU Affero General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU Affero General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <ncurses.h>
 #include <stdio.h>
+#include <tgmath.h>
 
-int render(short color,float zoom,float shift_x,float shift_y,int width,int height) {
-	int x_scale = 25 * zoom;
-	int y_scale = 10 * zoom;
+int render(short color,long double zoom,long double shift_x,long double shift_y,int width,int height) {
+	long long x_scale = 25 * fabs(zoom);
+	long long y_scale = 10 * fabs(zoom);
 	
 	shift_x = shift_x + width * (zoom - 1);
 	
-	float i,j,r;
+	long double i,j,r;
 	int k,kk;
 	kk = 0;
 	
-	float x,y;
+	long double x,y;
 	y = -height + shift_y;
 	
 	erase();
@@ -58,11 +59,11 @@ int render(short color,float zoom,float shift_x,float shift_y,int width,int heig
 }
 
 int main() {
-	float zoom = 1;
-	float zoom_factor = 1.25;
+	long double zoom = 1;
+	long double zoom_factor = 1.25;
 	
-	float shift_x = -11;
-	float shift_y = 0;
+	long double shift_x = -11;
+	long double shift_y = 0;
 	
 	// if you have a larger terminal...
 	// should get curses window size

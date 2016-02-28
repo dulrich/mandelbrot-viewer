@@ -2,6 +2,8 @@
 
 curses mandelbrot explorer based on the code snippet from http://mrl.nyu.edu/~perlin/
 
+currently fails after zooming in more than about 120 levels due to overflows
+
 
 # setup
 * libncurses5
