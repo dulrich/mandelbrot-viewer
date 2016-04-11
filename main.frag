@@ -19,7 +19,7 @@ uniform vec2 u_resolution;
 
 void main() {
 	float iter = 150.0;
-	float scale = 1.25;
+	float scale = 1.50;
 	
 	float aspect = u_resolution.x / u_resolution.y;
 	
@@ -27,7 +27,8 @@ void main() {
 	
 	c.x *= aspect;
 	
-	vec2 c_orig = c;
+	// vec2 c_orig = c; // mandelbrot
+	vec2 c_orig = vec2(-0.275, -0.645); // julia
 	
 	float i;
 	
@@ -40,5 +41,33 @@ void main() {
 		if ((c.x * c.x) + (c.y * c.y) > 4.0) break;
 	}
 	
-	gl_FragColor = vec4(i == iter ? 0.0 : i / iter, 0.0, 0.0, 1.0);
+	vec4 color;
+	float ratio = i / iter;
+	float peak = 0.750;
+	float peak_i = 1.0 - peak;
+	
+	vec3 rgb_falloff = vec3(
+		2.0,
+		1.0,
+		1.0
+	);
+	
+	if (ratio < peak) {
+		color = vec4(
+			clamp(1.0 - (peak - ratio) / (peak / rgb_falloff.x), 0.0, 1.0),
+			clamp(1.0 - (peak - ratio) / (peak / rgb_falloff.y), 0.0, 1.0),
+			clamp(1.0 - (peak - ratio) / (peak / rgb_falloff.z), 0.0, 1.0),
+			1.0
+		);
+	}
+	else {
+		color = vec4(
+			clamp(1.0 + (peak - ratio) / (peak_i / rgb_falloff.x), 0.0, 1.0),
+			clamp(1.0 + (peak - ratio) / (peak_i / rgb_falloff.y), 0.0, 1.0),
+			clamp(1.0 + (peak - ratio) / (peak_i / rgb_falloff.z), 0.0, 1.0),
+			1.0
+		);
+	}
+	
+	gl_FragColor = color;
 }
