@@ -12,8 +12,10 @@ also included is a glsl fragment shader that renders the set
 
 # setup (glsl)
 
-* glslViewer
+* [glfw](https://github.com/glfw/glfw) (required by glslViewer)
+* [glslViewer](https://github.com/patriciogonzalezvivo/glslViewer)
 * `glslViewer main.frag`
+
 
 # license
 
