@@ -24,8 +24,11 @@ void main() {
 	
 	vec2 c_orig;
 	
-	float peak = 0.800;
-	float peak_i = 1.0 - peak;
+	vec3 peak = vec3(
+		0.200,
+		0.400,
+		0.800
+	);
 	
 	vec3 rgb_falloff = vec3(
 		1.0,
@@ -40,8 +43,8 @@ void main() {
 	
 	c.x *= aspect;
 	
-	// c_orig = c; // mandelbrot
-	c_orig = vec2(-0.275, -0.645); // julia seed
+	c_orig = c; // mandelbrot
+	// c_orig = vec2(-0.275, -0.645); // julia seed
 	
 	float i;
 	
@@ -57,22 +60,30 @@ void main() {
 	vec4 color;
 	float ratio = i / iter;
 	
-	if (ratio < peak) {
-		color = vec4(
-			clamp(1.0 - (peak - ratio) / (peak / rgb_falloff.x), 0.0, 1.0),
-			clamp(1.0 - (peak - ratio) / (peak / rgb_falloff.y), 0.0, 1.0),
-			clamp(1.0 - (peak - ratio) / (peak / rgb_falloff.z), 0.0, 1.0),
-			1.0
-		);
+	vec3 dir_sign = vec3(1.0, 1.0, 1.0);
+	vec3 peak_i = vec3(1.0, 1.0, 1.0) - peak;
+	
+	if (ratio < peak.x) {
+		dir_sign.x = -1.0;
+		peak_i.x = peak.x;
 	}
-	else {
-		color = vec4(
-			clamp(1.0 + (peak - ratio) / (peak_i / rgb_falloff.x), 0.0, 1.0),
-			clamp(1.0 + (peak - ratio) / (peak_i / rgb_falloff.y), 0.0, 1.0),
-			clamp(1.0 + (peak - ratio) / (peak_i / rgb_falloff.z), 0.0, 1.0),
-			1.0
-		);
+	
+	if (ratio < peak.y) {
+		dir_sign.y = -1.0;
+		peak_i.y = peak.y;
 	}
+	
+	if (ratio < peak.z) {
+		dir_sign.z = -1.0;
+		peak_i.z = peak.z;
+	}
+	
+	color = vec4(
+		clamp(1.0 + (dir_sign.x * (peak.x - ratio) / (peak_i.x / rgb_falloff.x)), 0.0, 1.0),
+		clamp(1.0 + (dir_sign.y * (peak.y - ratio) / (peak_i.y / rgb_falloff.y)), 0.0, 1.0),
+		clamp(1.0 + (dir_sign.z * (peak.z - ratio) / (peak_i.z / rgb_falloff.z)), 0.0, 1.0),
+		1.0
+	);
 	
 	gl_FragColor = color;
 }
