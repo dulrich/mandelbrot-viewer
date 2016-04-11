@@ -18,8 +18,21 @@
 uniform vec2 u_resolution;
 
 void main() {
+	// ===== SET OPTIONS ===== //
 	float iter = 150.0;
 	float scale = 1.50;
+	
+	vec2 c_orig;
+	
+	float peak = 0.800;
+	float peak_i = 1.0 - peak;
+	
+	vec3 rgb_falloff = vec3(
+		1.0,
+		2.0,
+		4.0
+	);
+	// ===== END OPTIONS ===== //
 	
 	float aspect = u_resolution.x / u_resolution.y;
 	
@@ -27,8 +40,8 @@ void main() {
 	
 	c.x *= aspect;
 	
-	// vec2 c_orig = c; // mandelbrot
-	vec2 c_orig = vec2(-0.275, -0.645); // julia
+	// c_orig = c; // mandelbrot
+	c_orig = vec2(-0.275, -0.645); // julia seed
 	
 	float i;
 	
@@ -43,14 +56,6 @@ void main() {
 	
 	vec4 color;
 	float ratio = i / iter;
-	float peak = 0.750;
-	float peak_i = 1.0 - peak;
-	
-	vec3 rgb_falloff = vec3(
-		2.0,
-		1.0,
-		1.0
-	);
 	
 	if (ratio < peak) {
 		color = vec4(

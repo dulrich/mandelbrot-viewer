@@ -4,7 +4,7 @@ curses mandelbrot explorer based on the code snippet from http://mrl.nyu.edu/~pe
 
 currently fails after zooming in more than about 120 levels due to overflows
 
-also included is a glsl fragment shader that renders the set
+also included is a glsl fragment shader that renders the mandelbrot or julia set
 
 # setup (ncurses)
 
@@ -19,7 +19,7 @@ also included is a glsl fragment shader that renders the set
 
 # license
 
-mandelbrot viewer is copyright (C) 2015  David Ulrich.
+mandelbrot viewer is copyright (C) 2015 - 2016  David Ulrich.
 
 For full license details see LICENSE.
 
