@@ -4,10 +4,16 @@ curses mandelbrot explorer based on the code snippet from http://mrl.nyu.edu/~pe
 
 currently fails after zooming in more than about 120 levels due to overflows
 
+also included is a glsl fragment shader that renders the set
 
-# setup
+# setup (ncurses)
+
 * libncurses5
 
+# setup (glsl)
+
+* glslViewer
+* `glslViewer main.frag`
 
 # license
 
@@ -17,8 +23,7 @@ For full license details see LICENSE.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published
-by the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+by the Free Software Foundation, version 3 of the License.
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
