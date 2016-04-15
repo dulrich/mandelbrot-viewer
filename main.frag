@@ -32,8 +32,8 @@ void main() {
 	
 	vec3 rgb_falloff = vec3(
 		1.0,
-		2.0,
-		4.0
+		1.0,
+		1.0
 	);
 	// ===== END OPTIONS ===== //
 	
@@ -43,8 +43,8 @@ void main() {
 	
 	c.x *= aspect;
 	
-	c_orig = c; // mandelbrot
-	// c_orig = vec2(-0.275, -0.645); // julia seed
+	// c_orig = c; // mandelbrot
+	c_orig = vec2(-0.390, -0.647); // julia seed
 	
 	float i;
 	

@@ -1,11 +1,17 @@
-CFLAGS=	-W -Wall -I.. -pthread -g
+CC     = gcc
+CFLAGS = -W -Wall -I.. -pthread -g
 
 .PHONY: all clean
 
-all:
-	OS=`uname`; \
-	  test "$$OS" = Linux && LIBS="-lncurses" ; \
-	  $(CC) $(CFLAGS) main.c  $$LIBS $(ADD) -o mandelbrot;
+all: | clean curses glsl
 
 clean:
-	rm -rf mandelbrot *.exe *.dSYM *.obj
+	rm -rf curses glsl *.exe *.dSYM *.obj
+
+curses:
+	OS=`uname`; \
+		test "$$OS" = Linux && LIBS="-lncurses" ; \
+		$(CC) $(CFLAGS) main.c  $$LIBS $(ADD) -o curses;
+
+glsl:
+	$(CC) $(CFLAGS) viewer.c -o glsl
